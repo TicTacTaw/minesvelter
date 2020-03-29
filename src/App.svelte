@@ -39,6 +39,7 @@
   table {
     border-spacing: 0;
     border-collapse: collapse;
+    border: 2px solid #7accde;
   }
 </style>
 

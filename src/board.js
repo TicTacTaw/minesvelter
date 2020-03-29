@@ -10,7 +10,7 @@ while (arr.length < MINES_AMOUNT) {
   const y = Math.floor(Math.random() * SIZE_Y);
   const index = y * SIZE_X + x;
   const mine = { x, y, index };
-  if (!arr.includes(mine)) arr.push(mine);
+  if (!arr.some((mine) => mine.index === index)) arr.push(mine);
 }
 
 const initialBoard = [...Array(SIZE_X * SIZE_Y)].map((_, index) => {

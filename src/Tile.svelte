@@ -2,13 +2,14 @@
   import { createEventDispatcher } from 'svelte'
   let flagged = false
   export let cell = {}
+
   let revealed
   let minesAround = cell.minesAround !== undefined ? cell.minesAround : ''
   const dispatch = createEventDispatcher()
   const clickHandler = (e = window.event) => {
     if (!cell.revealed && e.metaKey) {
       flagged = !flagged
-    } else {
+    } else if (!flagged) {
       revealed = true
       dispatch('cellClick', { cell })
     }
@@ -64,7 +65,7 @@
 <div
   class="tile"
   class:revealed={cell.revealed}
-  class:flagged
+  class:flagged={flagged && !cell.revealed}
   on:click={clickHandler}
   data-value={cell.revealed ? (cell.hasMine ? 'X' : minesAround) : ''}>
   {#if cell.revealed}{cell.hasMine ? 'X' : minesAround || ''}{/if}
