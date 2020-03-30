@@ -1,7 +1,7 @@
 <script>
   import { beforeUpdate } from 'svelte'
-  import { board, SIZE_X } from './board.js'
-  import Tile from './Tile.svelte'
+  import { board, SIZE_X } from './stores/board.js'
+  import Tile from './components/Tile.svelte'
   let myBoard = []
   const unsubscribe = board.subscribe(value => {
     myBoard = value

@@ -27,11 +27,17 @@
     border: solid 0.5px white;
     font-weight: bold;
   }
+  .tile > img {
+    width: 100%;
+    height: 100%;
+    padding: 6px;
+    box-sizing: border-box;
+  }
   .tile.revealed {
     background-color: #f5f5f5;
   }
   .tile[data-value='X'] {
-    background-color: #eb3939;
+    background-color: #ee6060;
   }
   .tile[data-value='1'] {
     color: #055dd1;
@@ -68,5 +74,11 @@
   class:flagged={flagged && !cell.revealed}
   on:click={clickHandler}
   data-value={cell.revealed ? (cell.hasMine ? 'X' : minesAround) : ''}>
-  {#if cell.revealed}{cell.hasMine ? 'X' : minesAround || ''}{/if}
+  {#if cell.revealed}
+    {#if cell.hasMine}
+      <img src={require('../assets/svg/mine.svg')} />
+    {:else}{minesAround || ''}{/if}
+  {:else if flagged}
+    <img src={require('../assets/svg/flag.svg')} />
+  {/if}
 </div>
