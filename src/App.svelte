@@ -17,6 +17,36 @@
     if (cell.minesAround === 0 && !cell.hasMine) {
       const nextMines = myBoard.filter(
         tile =>
+          !tile.revealed &&
+          !tile.flagged &&
+          ((tile.x === cell.x - 1 && tile.y === cell.y - 1) ||
+            (tile.x === cell.x && tile.y === cell.y - 1) ||
+            (tile.x === cell.x + 1 && tile.y === cell.y - 1) ||
+            (tile.x === cell.x - 1 && tile.y === cell.y) ||
+            (tile.x === cell.x + 1 && tile.y === cell.y) ||
+            (tile.x === cell.x - 1 && tile.y === cell.y + 1) ||
+            (tile.x === cell.x && tile.y === cell.y + 1) ||
+            (tile.x === cell.x + 1 && tile.y === cell.y + 1))
+      )
+      nextMines.forEach(truc => handleClick({ detail: { cell: truc } }))
+    }
+  }
+
+  function flagCell({ detail: c }) {
+    const cell = c.cell
+    if (!cell || cell.revealed) return
+    board.update(value => {
+      const updatedBoard = [...value]
+      updatedBoard.splice(cell.index, 1, { ...cell, flagged: !cell.flagged })
+      return updatedBoard
+    })
+  }
+  function massReveal({ detail: c }) {
+    const cell = c.cell
+    if (!cell || cell.flagged) return
+    const { next, flagsAround } = myBoard.reduce(
+      (acc = { next: [], flagsAround: 0 }, tile) => {
+        if (
           (tile.x === cell.x - 1 && tile.y === cell.y - 1) ||
           (tile.x === cell.x && tile.y === cell.y - 1) ||
           (tile.x === cell.x + 1 && tile.y === cell.y - 1) ||
@@ -25,8 +55,20 @@
           (tile.x === cell.x - 1 && tile.y === cell.y + 1) ||
           (tile.x === cell.x && tile.y === cell.y + 1) ||
           (tile.x === cell.x + 1 && tile.y === cell.y + 1)
-      )
-      nextMines.forEach(truc => handleClick({ detail: { cell: truc } }))
+        ) {
+          if (tile.flagged) {
+            return { next: acc.next, flagsAround: acc.flagsAround + 1 }
+          } else {
+            acc.next.push(tile)
+            return acc
+          }
+        }
+        return acc
+      },
+      { next: [], flagsAround: 0 }
+    )
+    if (flagsAround === cell.minesAround) {
+      next.forEach(truc => handleClick({ detail: { cell: truc } }))
     }
   }
 </script>
@@ -51,7 +93,11 @@
         <tr>
           {#each Array(SIZE_X) as _, j}
             <td>
-              <Tile cell={myBoard[i * SIZE_X + j]} on:cellClick={handleClick} />
+              <Tile
+                cell={myBoard[i * SIZE_X + j]}
+                on:cellClick={handleClick}
+                on:flagCell={flagCell}
+                on:massReveal={massReveal} />
             </td>
           {/each}
         </tr>

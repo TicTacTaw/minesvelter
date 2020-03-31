@@ -1,18 +1,19 @@
 <script>
   import { createEventDispatcher } from 'svelte'
-  let flagged = false
   export let cell = {}
 
-  let revealed
   let minesAround = cell.minesAround !== undefined ? cell.minesAround : ''
   const dispatch = createEventDispatcher()
   const clickHandler = (e = window.event) => {
     if (!cell.revealed && e.metaKey) {
-      flagged = !flagged
-    } else if (!flagged) {
-      revealed = true
+      dispatch('flagCell', { cell })
+    } else if (!cell.flagged) {
       dispatch('cellClick', { cell })
     }
+  }
+
+  const doubleClickHandler = (e = window.event) => {
+    dispatch('massReveal', { cell })
   }
 </script>
 
@@ -26,6 +27,8 @@
     line-height: 30px;
     border: solid 0.5px white;
     font-weight: bold;
+    cursor: default;
+    user-select: none;
   }
   .tile > img {
     width: 100%;
@@ -71,14 +74,15 @@
 <div
   class="tile"
   class:revealed={cell.revealed}
-  class:flagged={flagged && !cell.revealed}
+  class:flagged={cell.flagged}
   on:click={clickHandler}
+  on:dblclick={doubleClickHandler}
   data-value={cell.revealed ? (cell.hasMine ? 'X' : minesAround) : ''}>
   {#if cell.revealed}
     {#if cell.hasMine}
       <img src={require('../assets/svg/mine.svg')} />
     {:else}{minesAround || ''}{/if}
-  {:else if flagged}
+  {:else if cell.flagged}
     <img src={require('../assets/svg/flag.svg')} />
   {/if}
 </div>
