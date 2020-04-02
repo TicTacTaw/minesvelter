@@ -20,15 +20,18 @@
 <style>
   .tile {
     background-color: #7accde;
-    width: 30px;
-    height: 30px;
+    width: 25px;
+    height: 25px;
     border-radius: 4px;
     text-align: center;
-    line-height: 30px;
+    line-height: 25px;
     border: solid 0.5px white;
     font-weight: bold;
     cursor: default;
     user-select: none;
+  }
+  .tile:hover {
+    background-color: #4799ab;
   }
   .tile > img {
     width: 100%;
