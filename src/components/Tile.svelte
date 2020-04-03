@@ -1,30 +1,31 @@
 <script>
   import { createEventDispatcher } from 'svelte'
+  import board from '../stores/board'
   export let cell = {}
 
   let minesAround = cell.minesAround !== undefined ? cell.minesAround : ''
   const dispatch = createEventDispatcher()
   const clickHandler = (e = window.event) => {
     if (!cell.revealed && e.metaKey) {
-      dispatch('flagCell', { cell })
+      board.flagCell(cell)
     } else if (!cell.flagged) {
-      dispatch('cellClick', { cell })
+      board.revealCell(cell)
     }
   }
 
   const doubleClickHandler = (e = window.event) => {
-    dispatch('massReveal', { cell })
+    board.massReveal(cell)
   }
 </script>
 
 <style>
   .tile {
     background-color: #7accde;
-    width: 25px;
-    height: 25px;
+    width: 30px;
+    height: 30px;
     border-radius: 4px;
     text-align: center;
-    line-height: 25px;
+    line-height: 30px;
     border: solid 0.5px white;
     font-weight: bold;
     cursor: default;
