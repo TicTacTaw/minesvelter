@@ -6,7 +6,7 @@
   let minesAround = cell.minesAround !== undefined ? cell.minesAround : ''
   const dispatch = createEventDispatcher()
   const clickHandler = (e = window.event) => {
-    if (!cell.revealed && e.metaKey) {
+    if (!cell.revealed && (e.metaKey || e.altKey)) {
       board.flagCell(cell)
     } else if (!cell.flagged) {
       board.revealCell(cell)
