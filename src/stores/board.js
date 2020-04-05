@@ -1,4 +1,5 @@
 import { writable, get } from 'svelte/store'
+import game from './game'
 import { isAround } from '../helpers'
 
 export const SIZE_X = 16
@@ -56,6 +57,7 @@ function revealCell(cell) {
         revealCell(tile)
       }
     })
+    game.updateResults(false)
     return
   }
 
@@ -63,6 +65,7 @@ function revealCell(cell) {
   const unrevealedTiles = myBoard.filter(({ revealed }) => !revealed)
   if (unrevealedTiles.every(({ hasMine }) => hasMine)) {
     unrevealedTiles.forEach((truc) => !truc.flagged && flagCell(truc))
+    game.updateResults(true)
     return
   }
 

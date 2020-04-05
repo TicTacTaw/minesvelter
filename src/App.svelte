@@ -1,7 +1,8 @@
 <script>
-  import { beforeUpdate } from 'svelte'
+  import { beforeUpdate, onDestroy } from 'svelte'
   import { fly } from 'svelte/transition'
   import board, { SIZE_X } from './stores/board.js'
+  import game from './stores/game.js'
   import Tile from './components/Tile.svelte'
   import { isAround } from './helpers'
 
@@ -11,6 +12,12 @@
   const unsubscribe = board.subscribe(value => {
     myBoard = value
   })
+
+  game.subscribe(value => {
+    results = value.results
+  })
+
+  onDestroy(unsubscribe)
 </script>
 
 <style>
