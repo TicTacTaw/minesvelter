@@ -2,7 +2,7 @@ import { writable, get } from 'svelte/store'
 import game from './game'
 import { isAround } from '../helpers'
 
-export const SIZE_X = 16
+export const SIZE_X = 24
 export const SIZE_Y = 16
 export const MINES_AMOUNT = 40
 

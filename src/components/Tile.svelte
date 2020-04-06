@@ -31,10 +31,9 @@
 
 <style>
   .tile {
-    background-color: #7accde;
+    background-color: rgb(141, 145, 156);
     width: 30px;
     height: 30px;
-    border-radius: 4px;
     text-align: center;
     line-height: 30px;
     border: solid 0.5px white;
@@ -43,7 +42,7 @@
     user-select: none;
   }
   .tile:hover {
-    background-color: #4799ab;
+    background-color: rgb(101, 105, 116);
   }
   .tile > img {
     width: 100%;
@@ -52,7 +51,7 @@
     box-sizing: border-box;
   }
   .tile.revealed {
-    background-color: #f5f5f5;
+    background-color: #ececec;
   }
   .tile[data-value='X'] {
     background-color: #ee6060;
