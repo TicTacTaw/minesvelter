@@ -6,35 +6,49 @@ export const SIZE_X = 16
 export const SIZE_Y = 16
 export const MINES_AMOUNT = 40
 
-const arr = []
-while (arr.length < MINES_AMOUNT) {
-  const x = Math.floor(Math.random() * SIZE_X)
-  const y = Math.floor(Math.random() * SIZE_Y)
-  const index = y * SIZE_X + x
-  const mine = { x, y, index }
-  if (!arr.some((mine) => mine.index === index)) arr.push(mine)
+const gameboard = [...Array(SIZE_X * SIZE_Y)].map((_, index) => ({
+  x: index % SIZE_X,
+  y: Math.floor(index / SIZE_X),
+  index,
+  revealed: false,
+}))
+
+const board = writable(gameboard)
+
+function initBoard(firstCell) {
+  const arr = []
+  while (arr.length < MINES_AMOUNT) {
+    const x = Math.floor(Math.random() * SIZE_X)
+    const y = Math.floor(Math.random() * SIZE_Y)
+    const index = y * SIZE_X + x
+    const mine = { x, y, index }
+
+    if (
+      !arr.some((mine) => mine.index === index) &&
+      mine.index !== firstCell.index &&
+      !isAround(firstCell, mine)
+    ) {
+      arr.push(mine)
+    }
+  }
+  board.update((value) => {
+    return value.map(({ x, y, index, revealed }) => {
+      const hasMine = !!arr.find((tile) => tile.x === x && tile.y === y)
+      const minesAround = [
+        { x: x - 1, y: y - 1 },
+        { x, y: y - 1 },
+        { x: x + 1, y: y - 1 },
+        { x: x - 1, y },
+        { x: x + 1, y },
+        { x: x - 1, y: y + 1 },
+        { x, y: y + 1 },
+        { x: x + 1, y: y + 1 },
+      ].filter((i) => !!arr.find((j) => i.x === j.x && i.y === j.y)).length
+
+      return { x, y, index, hasMine, minesAround, revealed }
+    })
+  })
 }
-
-const initialBoard = [...Array(SIZE_X * SIZE_Y)].map((_, index) => {
-  const x = index % SIZE_X
-  const y = Math.floor(index / SIZE_X)
-  const hasMine = !!arr.find((tile) => tile.x === x && tile.y === y)
-  const minesAround = [
-    { x: x - 1, y: y - 1 },
-    { x, y: y - 1 },
-    { x: x + 1, y: y - 1 },
-    { x: x - 1, y },
-    { x: x + 1, y },
-    { x: x - 1, y: y + 1 },
-    { x, y: y + 1 },
-    { x: x + 1, y: y + 1 },
-  ].filter((i) => !!arr.find((j) => i.x === j.x && i.y === j.y)).length
-
-  return { index, x, y, revealed: false, hasMine, minesAround }
-})
-
-const board = writable(initialBoard)
-
 /**
  *  Reveal the content of a cell
  *  Will reveal all surrounding tiles if there's no mines around
@@ -125,4 +139,5 @@ export default {
   revealCell,
   flagCell,
   massReveal,
+  initBoard,
 }

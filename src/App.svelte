@@ -8,16 +8,9 @@
 
   let results = null
 
-  let myBoard = []
-  const unsubscribe = board.subscribe(value => {
-    myBoard = value
-  })
-
   game.subscribe(value => {
     results = value.results
   })
-
-  onDestroy(unsubscribe)
 </script>
 
 <style>
@@ -59,11 +52,11 @@
 <div class="boardWrapper">
   <div class="grid">
     <table cellspacing="0" cellpadding="0">
-      {#each Array(myBoard.length / SIZE_X) as _, i}
+      {#each Array($board.length / SIZE_X) as _, i}
         <tr>
           {#each Array(SIZE_X) as _, j}
             <td>
-              <Tile cell={myBoard[i * SIZE_X + j]} />
+              <Tile cell={$board[i * SIZE_X + j]} />
             </td>
           {/each}
         </tr>

@@ -1,15 +1,26 @@
 <script>
   import { createEventDispatcher } from 'svelte'
   import board from '../stores/board'
+  import game from '../stores/game.js'
+
   export let cell = {}
 
-  let minesAround = cell.minesAround !== undefined ? cell.minesAround : ''
-  const dispatch = createEventDispatcher()
-  const clickHandler = (e = window.event) => {
+  let hasStarted = false
+  game.subscribe(value => {
+    hasStarted = value.hasStarted
+  })
+
+  $: minesAround = cell.minesAround !== undefined ? cell.minesAround : ''
+
+  const clickHandler = async (e = window.event) => {
     if (!cell.revealed && (e.metaKey || e.altKey)) {
       board.flagCell(cell)
     } else if (!cell.flagged) {
-      board.revealCell(cell)
+      if (!hasStarted) {
+        await game.start()
+        await board.initBoard(cell)
+      }
+      await board.revealCell(cell)
     }
   }
 
