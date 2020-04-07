@@ -1,6 +1,6 @@
 <script>
   import { beforeUpdate, onDestroy } from 'svelte'
-  import { fly } from 'svelte/transition'
+  import { fade } from 'svelte/transition'
   import board, { SIZE_X } from './stores/board.js'
   import game from './stores/game.js'
   import Tile from './components/Tile.svelte'
@@ -37,13 +37,25 @@
     height: 100%;
     top: 0;
     left: 0;
+    background-color: rgba(255, 255, 255, 0.6);
   }
   .results {
+    color: #333;
+  }
+
+  .results__title {
+    display: block;
     padding: 20px 60px;
-    background-color: rgba(0, 0, 0, 0.4);
-    font-size: 30px;
-    color: white;
+    font-size: 40px;
     font-weight: bold;
+    text-align: center;
+  }
+
+  .results__reset {
+    font-size: 14px;
+    padding: 10px 20px;
+    text-align: center;
+    text-transform: uppercase;
   }
 
   .app {
@@ -87,8 +99,14 @@
 
       {#if results}
         <div class="resultsWrapper">
-          <div in:fly={{ y: -100, duration: 500 }} class="results">
-            {#if !results.isWin}OOPS !{:else}YAY{/if}
+          <div
+            in:fade={{ duration: 200 }}
+            class="results"
+            on:click={game.resetGame}>
+            <span class="results__title">
+              {#if !results.isWin}OOPS !{:else}YAY{/if}
+            </span>
+            <span class="results__reset">Click to start a new game</span>
           </div>
         </div>
       {/if}

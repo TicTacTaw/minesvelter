@@ -2,9 +2,9 @@ import { writable, get } from 'svelte/store'
 import game from './game'
 import { isAround } from '../helpers'
 
-export const SIZE_X = 24
-export const SIZE_Y = 16
-export const MINES_AMOUNT = 40
+export const SIZE_X = 8
+export const SIZE_Y = 8
+export const MINES_AMOUNT = 10
 
 const gameboard = [...Array(SIZE_X * SIZE_Y)].map((_, index) => ({
   x: index % SIZE_X,
@@ -134,10 +134,22 @@ function massReveal(targetCell) {
   }
 }
 
+function resetBoard() {
+  board.set(
+    [...Array(SIZE_X * SIZE_Y)].map((_, index) => ({
+      x: index % SIZE_X,
+      y: Math.floor(index / SIZE_X),
+      index,
+      revealed: false,
+    }))
+  )
+}
+
 export default {
   subscribe: board.subscribe,
   revealCell,
   flagCell,
   massReveal,
   initBoard,
+  resetBoard,
 }

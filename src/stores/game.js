@@ -1,4 +1,5 @@
 import { writable } from 'svelte/store'
+import board from './board'
 
 const initialGame = {
   results: null,
@@ -23,8 +24,14 @@ function start() {
   }))
 }
 
+function resetGame() {
+  game.set(initialGame)
+  board.resetBoard()
+}
+
 export default {
   subscribe: game.subscribe,
   updateResults,
   start,
+  resetGame,
 }
