@@ -4,6 +4,11 @@ import board from './board'
 const initialGame = {
   results: null,
   hasStarted: false,
+  settings: {
+    x: 8,
+    y: 8,
+    mines: 10,
+  },
 }
 
 const game = writable(initialGame)
@@ -24,8 +29,11 @@ function start() {
   }))
 }
 
-function resetGame() {
-  game.set(initialGame)
+function resetGame(newSettings = null) {
+  game.update((value) => ({
+    ...initialGame,
+    settings: newSettings || value.settings,
+  }))
   board.resetBoard()
 }
 

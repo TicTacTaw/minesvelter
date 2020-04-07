@@ -32,10 +32,10 @@
 <style>
   .tile {
     background-color: rgb(141, 145, 156);
-    width: 30px;
-    height: 30px;
+    width: 28px;
+    height: 28px;
     text-align: center;
-    line-height: 30px;
+    line-height: 28px;
     border: solid 0.5px white;
     font-weight: bold;
     cursor: default;

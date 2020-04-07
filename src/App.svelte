@@ -4,13 +4,10 @@
   import board, { SIZE_X } from './stores/board.js'
   import game from './stores/game.js'
   import Tile from './components/Tile.svelte'
+  import Settings from './components/Settings.svelte'
   import { isAround } from './helpers'
 
-  let results = null
-
-  game.subscribe(value => {
-    results = value.results
-  })
+  const reset = () => game.resetGame()
 </script>
 
 <style>
@@ -52,6 +49,7 @@
   }
 
   .results__reset {
+    display: block;
     font-size: 14px;
     padding: 10px 20px;
     text-align: center;
@@ -82,29 +80,28 @@
 <div class="app">
   <div class="settings">
     <h1>MINESVELTER</h1>
+
+    <Settings />
   </div>
   <div class="boardWrapper">
     <div class="grid">
       <table cellspacing="0" cellpadding="0">
-        {#each Array($board.length / SIZE_X) as _, i}
+        {#each Array($board.length / $game.settings.x) as _, i}
           <tr>
-            {#each Array(SIZE_X) as _, j}
+            {#each Array($game.settings.x) as _, j}
               <td>
-                <Tile cell={$board[i * SIZE_X + j]} />
+                <Tile cell={$board[i * $game.settings.x + j]} />
               </td>
             {/each}
           </tr>
         {/each}
       </table>
 
-      {#if results}
+      {#if $game.results}
         <div class="resultsWrapper">
-          <div
-            in:fade={{ duration: 200 }}
-            class="results"
-            on:click={game.resetGame}>
+          <div in:fade={{ duration: 200 }} class="results" on:click={reset}>
             <span class="results__title">
-              {#if !results.isWin}OOPS !{:else}YAY{/if}
+              {#if !$game.results.isWin}OOPS !{:else}YAY{/if}
             </span>
             <span class="results__reset">Click to start a new game</span>
           </div>

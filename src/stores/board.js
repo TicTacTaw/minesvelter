@@ -4,7 +4,6 @@ import { isAround } from '../helpers'
 
 export const SIZE_X = 8
 export const SIZE_Y = 8
-export const MINES_AMOUNT = 10
 
 const gameboard = [...Array(SIZE_X * SIZE_Y)].map((_, index) => ({
   x: index % SIZE_X,
@@ -16,11 +15,12 @@ const gameboard = [...Array(SIZE_X * SIZE_Y)].map((_, index) => ({
 const board = writable(gameboard)
 
 function initBoard(firstCell) {
+  const { settings } = get(game)
   const arr = []
-  while (arr.length < MINES_AMOUNT) {
-    const x = Math.floor(Math.random() * SIZE_X)
-    const y = Math.floor(Math.random() * SIZE_Y)
-    const index = y * SIZE_X + x
+  while (arr.length < settings.mines) {
+    const x = Math.floor(Math.random() * settings.x)
+    const y = Math.floor(Math.random() * settings.y)
+    const index = y * settings.x + x
     const mine = { x, y, index }
 
     if (
@@ -135,10 +135,11 @@ function massReveal(targetCell) {
 }
 
 function resetBoard() {
+  const { settings } = get(game)
   board.set(
-    [...Array(SIZE_X * SIZE_Y)].map((_, index) => ({
-      x: index % SIZE_X,
-      y: Math.floor(index / SIZE_X),
+    [...Array(settings.x * settings.y)].map((_, index) => ({
+      x: index % settings.x,
+      y: Math.floor(index / settings.x),
       index,
       revealed: false,
     }))
