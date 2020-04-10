@@ -43,7 +43,7 @@
   .results__title {
     display: block;
     padding: 20px 60px;
-    font-size: 40px;
+    font-size: 32px;
     font-weight: bold;
     text-align: center;
   }

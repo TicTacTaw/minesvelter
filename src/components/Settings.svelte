@@ -7,6 +7,7 @@
   $: x = x || 8
   $: y = y || 8
   $: mines = 10
+  $: preset = 'Easy'
 
   const submit = () => {
     if (!(x && y && mines)) return
@@ -20,6 +21,16 @@
       y: _y,
       mines: _mines,
     })
+  }
+
+  const setPreset = (presetX, presetY, presetMines) => {
+    if (!presetX || !presetY || !presetMines) {
+      preset = 'Custom'
+    } else {
+      x = presetX
+      y = presetY
+      mines = presetMines
+    }
   }
 </script>
 
@@ -37,8 +48,9 @@
 
   .setting__input {
     flex: 1;
-    height: 30px;
+    height: 25px;
     text-align: center;
+    border: 1px solid #444;
   }
 
   .newGame {
@@ -71,6 +83,22 @@
   .setting__gridSeparator {
     margin: 0 15px;
   }
+
+  .preset__input {
+    display: none;
+  }
+
+  .preset__label {
+    border: 1px solid #333;
+    padding: 0.2rem 0.5rem;
+    font-size: 10px;
+    cursor: pointer;
+  }
+
+  .preset__input:checked + label {
+    background-color: #333;
+    color: white;
+  }
 </style>
 
 <div class="settings">
@@ -80,10 +108,59 @@
   </span>
   <div class="setting">
     <input
+      id="preset-easy"
+      class="preset__input"
+      type="radio"
+      value="Easy"
+      bind:group={preset} />
+    <label
+      class="preset__label"
+      for="preset-easy"
+      on:click={() => setPreset(8, 8, 10)}>
+      EASY
+    </label>
+
+    <input
+      id="preset-medium"
+      class="preset__input"
+      type="radio"
+      value="Medium"
+      bind:group={preset} />
+    <label
+      class="preset__label"
+      for="preset-medium"
+      on:click={() => setPreset(16, 16, 40)}>
+      MEDIUM
+    </label>
+
+    <input
+      id="preset-hard"
+      class="preset__input"
+      type="radio"
+      value="Hard"
+      bind:group={preset} />
+    <label
+      class="preset__label"
+      for="preset-hard"
+      on:click={() => setPreset(24, 24, 120)}>
+      HARD
+    </label>
+
+    <input
+      id="preset-custom"
+      class="preset__input"
+      type="radio"
+      value="Custom"
+      bind:group={preset} />
+    <label class="preset__label" for="preset-custom">CUSTOM</label>
+  </div>
+  <div class="setting">
+    <input
       class="setting__input"
       type="number"
       min="8"
       max={MAX_X}
+      on:change={() => setPreset()}
       bind:value={x} />
     <span class="setting__gridSeparator">x</span>
     <input
@@ -91,6 +168,7 @@
       type="number"
       min="8"
       max={MAX_Y}
+      on:change={() => setPreset()}
       bind:value={y} />
   </div>
 
@@ -104,6 +182,7 @@
       type="number"
       min="10"
       max={x * y - (x + y + 1)}
+      on:change={() => setPreset()}
       bind:value={mines} />
   </div>
   <button class="newGame" type="button" on:click={submit}>New game</button>
