@@ -1,0 +1,18 @@
+.tile.svelte-oejgr2.svelte-oejgr2{background-color:rgb(141, 145, 156);width:28px;height:28px;text-align:center;line-height:28px;border:solid 0.5px white;font-weight:bold;cursor:default;user-select:none}.tile.svelte-oejgr2.svelte-oejgr2:hover{background-color:rgb(101, 105, 116)}.tile.svelte-oejgr2>img.svelte-oejgr2{width:100%;height:100%;padding:6px;box-sizing:border-box}.tile.revealed.svelte-oejgr2.svelte-oejgr2{background-color:#ececec}.tile[data-value='X'].svelte-oejgr2.svelte-oejgr2{background-color:#ee6060}.tile[data-value='1'].svelte-oejgr2.svelte-oejgr2{color:#055dd1}.tile[data-value='2'].svelte-oejgr2.svelte-oejgr2{color:#16a139}.tile[data-value='3'].svelte-oejgr2.svelte-oejgr2{color:#ff6528}.tile[data-value='4'].svelte-oejgr2.svelte-oejgr2{color:#eb3939}.tile[data-value='5'].svelte-oejgr2.svelte-oejgr2{color:#df22fa}.tile[data-value='6'].svelte-oejgr2.svelte-oejgr2{color:#8700e0}.tile[data-value='7'].svelte-oejgr2.svelte-oejgr2{color:#00cece}.tile[data-value='8'].svelte-oejgr2.svelte-oejgr2{color:#865454}.tile.flagged.svelte-oejgr2.svelte-oejgr2{background-color:#ffdd44}
+.settings.svelte-xcc3rj{padding:2rem}.setting.svelte-xcc3rj{display:flex;justify-content:space-between;align-items:center;padding:5px 0 10px}.setting__input.svelte-xcc3rj{flex:1;height:25px;text-align:center;border:1px solid #444}.newGame.svelte-xcc3rj{padding:1rem;width:100%;background-color:#444;border:none;color:white;text-transform:uppercase;font-weight:900;cursor:pointer}.newGame.svelte-xcc3rj:hover{background-color:#333}.setting__name.svelte-xcc3rj{text-transform:uppercase;font-size:14px;font-weight:700}.setting__info.svelte-xcc3rj{font-size:12px;font-style:italic;font-weight:300;text-transform:none}.setting__gridSeparator.svelte-xcc3rj{margin:0 15px}.preset__input.svelte-xcc3rj{display:none}.preset__label.svelte-xcc3rj{border:1px solid #333;padding:0.2rem 0.5rem;font-size:10px;cursor:pointer}.preset__input:checked+label.svelte-xcc3rj{background-color:#333;color:white}
+.boardWrapper.svelte-s4rvvv{margin:0 auto}.grid.svelte-s4rvvv{position:relative;display:inline-block}table.svelte-s4rvvv{border-spacing:0;border-collapse:collapse}.resultsWrapper.svelte-s4rvvv{position:absolute;display:flex;align-items:center;justify-content:center;width:100%;height:100%;top:0;left:0;background-color:rgba(255, 255, 255, 0.6)}.results.svelte-s4rvvv{color:#333}.results__title.svelte-s4rvvv{display:block;padding:20px 60px;font-size:32px;font-weight:bold;text-align:center}.results__reset.svelte-s4rvvv{display:block;font-size:14px;padding:10px 20px;text-align:center;text-transform:uppercase}.app.svelte-s4rvvv{display:flex;align-items:center}.settings.svelte-s4rvvv{left:0;top:0;min-height:100vh;width:300px;background-color:#eee}h1.svelte-s4rvvv{text-align:center;font-weight:100;letter-spacing:8px;font-size:28px}
+html,
+body {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  color: #333;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+}
+
