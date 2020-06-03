@@ -27,6 +27,11 @@
   const doubleClickHandler = (e = window.event) => {
     board.massReveal(cell)
   }
+
+  const rightClickHandler = e => {
+    e.preventDefault()
+    board.flagCell(cell)
+  }
 </script>
 
 <style>
@@ -91,6 +96,7 @@
   class:flagged={cell.flagged}
   on:click={clickHandler}
   on:dblclick={doubleClickHandler}
+  on:contextmenu={rightClickHandler}
   data-value={cell.revealed ? (cell.hasMine ? 'X' : minesAround) : ''}>
   {#if cell.revealed}
     {#if cell.hasMine}
