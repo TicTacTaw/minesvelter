@@ -8,6 +8,7 @@ const initialGame = {
     x: 8,
     y: 8,
     mines: 10,
+    flagless: false,
   },
 }
 

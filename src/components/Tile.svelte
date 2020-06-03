@@ -6,15 +6,17 @@
   export let cell = {}
 
   let hasStarted = false
+  let flagless = false
   game.subscribe(value => {
     hasStarted = value.hasStarted
+    flagless = value.settings.flagless
   })
 
   $: minesAround = cell.minesAround !== undefined ? cell.minesAround : ''
 
   const clickHandler = async (e = window.event) => {
     if (!cell.revealed && (e.metaKey || e.altKey)) {
-      board.flagCell(cell)
+      if (!flagless) board.flagCell(cell)
     } else if (!cell.flagged) {
       if (!hasStarted) {
         await game.start()
@@ -29,8 +31,10 @@
   }
 
   const rightClickHandler = e => {
-    e.preventDefault()
-    board.flagCell(cell)
+    if (!flagless) {
+      e.preventDefault()
+      board.flagCell(cell)
+    }
   }
 </script>
 

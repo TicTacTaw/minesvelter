@@ -1,8 +1,11 @@
 <script>
   import game from '../stores/game.js'
+  import SwitchToggle from './SwitchToggle.svelte'
 
   const MAX_X = 24
   const MAX_Y = 24
+
+  let flagless = false
 
   $: x = x || 8
   $: y = y || 8
@@ -20,6 +23,7 @@
       x: _x,
       y: _y,
       mines: _mines,
+      flagless,
     })
   }
 
@@ -62,6 +66,7 @@
     text-transform: uppercase;
     font-weight: 900;
     cursor: pointer;
+    margin-top: 50px;
   }
 
   .newGame:hover {
@@ -72,6 +77,7 @@
     text-transform: uppercase;
     font-size: 14px;
     font-weight: 700;
+    margin-right: 10px;
   }
 
   .setting__info {
@@ -185,5 +191,7 @@
       on:change={() => setPreset()}
       bind:value={mines} />
   </div>
+  <span class="setting__name">FLAGLESS MODE</span>
+  <SwitchToggle bind:isActive={flagless} />
   <button class="newGame" type="button" on:click={submit}>New game</button>
 </div>
