@@ -1,13 +1,18 @@
 <script>
-  import { beforeUpdate, onDestroy } from 'svelte'
+  import { beforeUpdate, onMount } from 'svelte'
   import { fade } from 'svelte/transition'
   import board, { SIZE_X } from './stores/board.js'
   import game from './stores/game.js'
   import Tile from './components/Tile.svelte'
   import Settings from './components/Settings.svelte'
-  import { isAround } from './helpers'
+  import Timer from './components/Timer.svelte'
+  import { formatTime, isAround } from './helpers'
 
   const reset = () => game.resetGame()
+
+  onMount(() => {
+    reset()
+  })
 </script>
 
 <style>
@@ -60,12 +65,15 @@
     display: flex;
     align-items: center;
   }
-  .settings {
+  aside {
     left: 0;
     top: 0;
     min-height: 100vh;
     width: 300px;
     background-color: #eee;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
   }
 
   h1 {
@@ -74,15 +82,33 @@
     letter-spacing: 8px;
     font-size: 28px;
   }
+
+  .app__stats {
+    color: #333;
+    padding: 2rem;
+  }
+
+  .stat__bestScore {
+    display: block;
+    font-weight: 300;
+    font-size: 14px;
+  }
 </style>
 
 <svelte:options immutable />
 <div class="app">
-  <div class="settings">
+  <aside>
     <h1>MINESVELTER</h1>
 
     <Settings />
-  </div>
+
+    <div class="app__stats">
+      <Timer />
+      <span class="stat__bestScore">
+        PERSONAL BEST: {formatTime($game.bestScore)}s
+      </span>
+    </div>
+  </aside>
   <div class="boardWrapper">
     <div class="grid">
       <table cellspacing="0" cellpadding="0">

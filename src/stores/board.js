@@ -2,17 +2,7 @@ import { writable, get } from 'svelte/store'
 import game from './game'
 import { isAround } from '../helpers'
 
-export const SIZE_X = 8
-export const SIZE_Y = 8
-
-const gameboard = [...Array(SIZE_X * SIZE_Y)].map((_, index) => ({
-  x: index % SIZE_X,
-  y: Math.floor(index / SIZE_X),
-  index,
-  revealed: false,
-}))
-
-const board = writable(gameboard)
+const board = writable([])
 
 function initBoard(firstCell) {
   const { settings } = get(game)
@@ -31,6 +21,7 @@ function initBoard(firstCell) {
       arr.push(mine)
     }
   }
+
   board.update((value) => {
     return value.map(({ x, y, index, revealed }) => {
       const hasMine = !!arr.find((tile) => tile.x === x && tile.y === y)
