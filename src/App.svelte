@@ -43,6 +43,7 @@
   }
   .results {
     color: #333;
+    cursor: pointer;
   }
 
   .results__title {

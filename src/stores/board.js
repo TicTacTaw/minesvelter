@@ -57,12 +57,17 @@ function revealCell(cell) {
 
   // Lose the game if it's a mine, revealing every other mines on the board
   if (cell.hasMine) {
-    myBoard.forEach((tile) => {
-      if (tile.hasMine && !tile.flagged) {
-        revealCell(tile)
-      }
-    })
-    game.updateResults(false)
+    const { results } = get(game)
+
+    if (!results) {
+      game.updateResults(false)
+      myBoard.forEach((tile) => {
+        if (tile.hasMine && !tile.flagged) {
+          revealCell(tile)
+        }
+      })
+    }
+
     return
   }
 
